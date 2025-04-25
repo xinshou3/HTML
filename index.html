@@ -3,88 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人网站</title>
+    <title>湮灭的个人空间</title>
     <style>
-        /* 登录模态框样式 */
-        .modal {
-            display: none; /* 默认隐藏模态框 */
-            position: fixed; /* 固定定位 */
-            z-index: 102; /* 确保在最上层 */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7); /* 半透明黑色背景 */
+        /* 全局变量 */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #333;
+            --gray-color: #95a5a6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
-
-        .modal-content {
-            background-color: #fefefe; /* 内容区域背景色 */
-            margin: 60px auto 0;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 400px; /* 最大宽度限制 */
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 阴影效果 */
+        
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
         }
-
-        .modal-content input {
-            width: 100%;
-            padding: 0.8rem;
-            margin: 1rem 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
         }
-
-        .modal-content button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            width: 100%;
+        
+        a {
+            text-decoration: none;
+            color: inherit;
         }
-
-        .modal-content button:hover {
-            background-color: #2980b9; /* 悬停颜色变化 */
-        }
-
-        /* 登录状态显示样式 */
-      
-.login-status {
-    position: fixed;
-    top: 0px;
-    right: 10px;
-    background: #2c3e50;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius:  0 0 4px 4px; 
-    z-index: 101;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logout-btn {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 0.8em;
-    text-decoration: underline;
-}
-
-        /* 加载动画样式 */
+        
+        /* 加载动画 */
         #loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #f9f9f9;
+            background: var(--light-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -97,7 +56,7 @@
             height: 50px;
             border: 5px solid rgba(52, 152, 219, 0.2);
             border-radius: 50%;
-            border-top-color: #3498db;
+            border-top-color: var(--primary-color);
             animation: spin 1s linear infinite;
         }
         
@@ -105,317 +64,517 @@
             to { transform: rotate(360deg); }
         }
         
-        /* 全局样式 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        body {
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
-        }
-        
-        /* 导航栏样式 */
+        /* 导航栏 */
         nav {
-            background-color: #2c3e50;
+            background-color: var(--secondary-color);
             color: white;
-            padding: 1.2rem 0;
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: var(--shadow);
         }
         
-        nav ul {
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
             list-style: none;
         }
         
-        nav ul li {
-            margin: 0 1rem;
+        .nav-links li {
+            margin-left: 1.5rem;
         }
         
-        nav ul li a {
+        .nav-links a {
             color: white;
-            text-decoration: none;
             padding: 0.5rem 1rem;
             border-radius: 4px;
-            transition: background-color 0.3s;
+            transition: var(--transition);
         }
         
-        nav ul li a:hover {
-            background-color: #34495e;
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
         
-        /* 主要内容区域样式 */
+        /* 主要内容容器 */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
         
+        /* 各部分公共样式 */
         section {
             margin-bottom: 3rem;
-            padding: 2rem;
+            padding: 2.5rem;
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
         }
         
-        h1, h2 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
+        section:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         
-        /* 主页区域样式 */
+        h1, h2, h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        /* 主页区域 */
         #home {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 8px;
+            margin-top: 1rem;
         }
         
         #home h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
         }
         
-        /* 个人信息区域样式 */
+        #home p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* 个人信息区域 */
         .profile {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 3rem;
         }
         
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid #ecf0f1;
+            border: 5px solid var(--light-color);
+            box-shadow: var(--shadow);
         }
         
-        /* 工具和成品区域样式 */
+        .profile-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-info p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-info i {
+            margin-right: 10px;
+            color: var(--primary-color);
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* 工具和软件区域 */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
         
         .card {
-            border: 1px solid #ddd;
+            border: 1px solid #eee;
             border-radius: 8px;
-            padding: 1.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 1.8rem;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
-        /* 卡片链接样式 */
-        .card-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .card-link:hover .card {
+        .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        /* 确保链接状态不影响样式 */
-        .card-link:link, 
-        .card-link:visited, 
-        .card-link:hover, 
-        .card-link:active {
-            color: inherit;
-            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
         }
         
         .card h3 {
-            margin-bottom: 0.5rem;
-            color: #3498db;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
         
-        /* 留言板区域样式 */
+        .card p {
+            color: var(--gray-color);
+            flex-grow: 1;
+        }
+        
+        .card-link {
+            display: block;
+            height: 100%;
+        }
+        
+        /* 留言板区域 */
+        #contact {
+            background-color: #f8f9fa;
+        }
+        
         form {
-            display: grid;
-            gap: 1rem;
             max-width: 600px;
             margin: 0 auto;
         }
         
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
         input, textarea {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.8rem 1rem;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 1rem;
+            transition: var(--transition);
         }
         
-        button {
-            background-color: #3498db;
+        input:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
+            padding: 0.8rem 1.8rem;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 1rem;
+            transition: var(--transition);
         }
         
-        button:hover {
+        .btn:hover {
             background-color: #2980b9;
+            transform: translateY(-2px);
         }
         
-        /* 页脚样式 */
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        /* 登录状态 */
+        .login-status {
+            position: fixed;
+            top: 0;
+            right: 20px;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0 0 4px 4px;
+            z-index: 101;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .logout-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8em;
+            text-decoration: underline;
+            transition: var(--transition);
+        }
+        
+        .logout-btn:hover {
+            color: var(--light-color);
+        }
+        
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 102;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(3px);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 100px auto 0;
+            padding: 2.5rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-content h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-content p {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--gray-color);
+        }
+        
+        .modal-content input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .modal-content .btn {
+            margin-top: 0.5rem;
+        }
+        
+        .btn-secondary {
+            background-color: var(--gray-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        
+        /* 页脚 */
         footer {
             text-align: center;
-            padding: 1.5rem;
-            background-color: #2c3e50;
+            padding: 2rem;
+            background-color: var(--secondary-color);
             color: white;
+            margin-top: 3rem;
         }
         
-        /* 响应式设计 - 移动设备适配 */
+        /* 响应式设计 */
         @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+            }
+            
+            .nav-links li {
+                margin-left: 0.8rem;
+            }
+            
             .profile {
                 flex-direction: column;
                 text-align: center;
             }
             
-            nav ul {
-                flex-direction: column;
-                align-items: center;
+            section {
+                padding: 1.5rem;
             }
             
-            nav ul li {
-                margin: 0.5rem 0;
+            #home h1 {
+                font-size: 2.2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <!-- 修改后的登录模态框 -->
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <h2>欢迎访问</h2>
-        <p>请输入用户名登录或注册</p>
-        <input type="text" id="usernameInput" placeholder="输入用户名">
-        <button id="loginBtn">登录/注册</button>
-        <button id="guestBtn" style="margin-top: 10px; background-color: #95a5a6;">游客浏览</button>
-    </div>
-</div>
-    
-    <!-- 页面加载动画 -->
+    <!-- 加载动画 -->
     <div id="loader">
         <div class="loader-spinner"></div>
     </div>
     
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>欢迎访问</h2>
+            <p>请输入用户名登录或注册</p>
+            <input type="text" id="usernameInput" placeholder="输入用户名">
+            <button id="loginBtn" class="btn btn-block">登录/注册</button>
+            <button id="guestBtn" class="btn btn-secondary btn-block">游客浏览</button>
+        </div>
+    </div>
+    
     <!-- 导航栏 -->
     <nav>
-        <ul>
-            <li><a href="#home">主页</a></li>
-            <li><a href="#about">个人信息</a></li>
-            <li><a href="#tools">工具</a></li>
-            <li><a href="#works">成品</a></li>
-            <li><a href="#contact">留言</a></li>
-        </ul>
+        <div class="nav-container">
+            <div class="logo">湮灭</div>
+            <ul class="nav-links">
+                <li><a href="#home"><i class="fas fa-home"></i> 主页</a></li>
+                <li><a href="#about"><i class="fas fa-user"></i> 个人信息</a></li>
+                <li><a href="#tools"><i class="fas fa-tools"></i> 工具</a></li>
+                <li><a href="#software"><i class="fas fa-laptop-code"></i> 软件</a></li>
+                <li><a href="#contact"><i class="fas fa-comment"></i> 留言</a></li>
+            </ul>
+        </div>
     </nav>
     
-    <!-- 网站主要内容容器 -->
+    <!-- 主要内容 -->
     <div class="container">
-        <!-- 主页区域 -->
+        <!-- 主页 -->
         <section id="home">
-            <h1>欢迎来到我的个人网站</h1>
-            <p>这里是我的个人空间，分享我的信息、工具和作品</p>
+            <h1>欢迎来到我的个人空间</h1>
+            <p>这里汇集了我的个人信息、常用工具和软件资源，以及一个可以与我交流的留言板</p>
         </section>
         
-        <!-- 个人信息区域 -->
+        <!-- 个人信息 -->
         <section id="about">
             <h2>个人信息</h2>
             <div class="profile">
-                <img src="image\234.jpg" alt="个人头像" class="profile-img">
-                <div>
+                <img src="image/234.jpg" alt="个人头像" class="profile-img">
+                <div class="profile-info">
                     <h3>湮灭</h3>
-                    <p>联系方式：2750195865@qq.com</p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
+                    <p><i class="fas fa-envelope"></i> 邮箱：2750195865@qq.com</p>
+                    <p><i class="fab fa-tiktok"></i> 抖音主页：dykpel4hhlrs</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 所在地：中国</p>
+                    <p><i class="fas fa-heart"></i> 兴趣：编程、设计、技术探索</p>
                 </div>
             </div>
         </section>
         
-        <!-- 工具区域 - 包含可点击的卡片链接 -->
+        <!-- 工具 -->
         <section id="tools">
-            <h2>工具</h2>
-            <p>必备开发工具</p>
+            <h2>实用工具</h2>
+            <p>我精选的一些高效工具，点击可直接访问</p>
             <div class="grid">
                 <a href="https://chat.deepseek.com/" target="_blank" class="card-link">
                     <div class="card">
-                        <h3>Deepseek</h3>
-                        <p></p>
+                        <h3><i class="fas fa-robot"></i> Deepseek</h3>
+                        <p>强大的AI助手，提供智能对话和问题解答服务</p>
                     </div>
                 </a>
                 <a href="https://www.tbtool.cn/download/202502.html" target="_blank" class="card-link">
                     <div class="card">
-                        <h3>图吧工具箱</h3>
-                        <p></p>
+                        <h3><i class="fas fa-toolbox"></i> 图吧工具箱</h3>
+                        <p>硬件检测工具合集，电脑爱好者的必备工具</p>
                     </div>
                 </a>
                 <a href="https://www.figma.com/" target="_blank" class="card-link">
                     <div class="card">
-                        <h3>Figma</h3>
-                        <p>界面设计工具，用于创建和共享设计原型。</p>
+                        <h3><i class="fas fa-paint-brush"></i> Figma</h3>
+                        <p>专业的界面设计工具，支持团队协作和原型设计</p>
                     </div>
                 </a>
             </div>
         </section>
         
-        <!-- 成品展示区域 -->
-        <section id="works">
+        <!-- 软件 -->
+        <section id="software">
             <h2>软件下载</h2>
-            <p></p>
+            <p>精选实用软件资源</p>
             <div class="grid">
-                <div class="card">
-                    <h3>个人博客系统</h3>
-                    <p>使用React和Node.js构建的全功能博客系统。</p>
-                </div>
-                <div class="card">
-                    <h3>电商网站</h3>
-                    <p>响应式设计的电子商务平台，支持多种支付方式。</p>
-                </div>
-                <div class="card">
-                    <h3>移动应用</h3>
-                    <p>使用React Native开发的跨平台移动应用。</p>
-                </div>
+                <a href="#" class="card-link">
+                    <div class="card">
+                        <h3><i class="fas fa-code"></i> VS Code</h3>
+                        <p>微软开发的轻量级代码编辑器，支持多种编程语言</p>
+                    </div>
+                </a>
+                <a href="#" class="card-link">
+                    <div class="card">
+                        <h3><i class="fab fa-git-alt"></i> Git</h3>
+                        <p>分布式版本控制系统，开发者必备工具</p>
+                    </div>
+                </a>
+                <a href="#" class="card-link">
+                    <div class="card">
+                        <h3><i class="fas fa-database"></i> MySQL</h3>
+                        <p>流行的开源关系型数据库管理系统</p>
+                    </div>
+                </a>
             </div>
         </section>
         
-        <!-- 留言板区域 - 登录后才能使用 -->
+        <!-- 留言板 -->
         <section id="contact">
             <h2>留言板</h2>
-            <!-- 登录提示 - 未登录时显示 -->
             <div id="loginPrompt" style="display: none; text-align: center; padding: 2rem;">
                 <p>请先登录后才能使用留言功能</p>
-                <button onclick="showLoginModal()">点击登录</button>
+                <button class="btn" onclick="showLoginModal()">点击登录</button>
             </div>
-            <!-- 留言表单 - 登录后显示 -->
             <div id="messageForm">
-                <p>欢迎留下您的意见和建议</p>
-				<p>推荐使用邮箱单独发送</p>
+                <p>欢迎留下您的意见和建议，我会尽快回复</p>
                 <form>
-                    <div>
-                        <label for="name">姓名:</label>
-                        <input type="text" id="name" name="name" required>
+                    <div class="form-group">
+                        <label for="name">昵称</label>
+                        <input type="text" id="name" name="name" required placeholder="请输入您的昵称">
                     </div>
-                    <div>
-                        <label for="email">邮箱:</label>
-                        <input type="email" id="email" name="email" required>
+                    <div class="form-group">
+                        <label for="email">邮箱 (选填)</label>
+                        <input type="email" id="email" name="email" placeholder="请输入您的邮箱 (选填)">
                     </div>
-                    <div>
-                        <label for="message">留言内容:</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
+                    <div class="form-group">
+                        <label for="message">留言内容</label>
+                        <textarea id="message" name="message" required placeholder="请输入您的留言内容..."></textarea>
                     </div>
-                    <button type="submit">提交留言</button>
+                    <button type="submit" class="btn btn-block">提交留言</button>
                 </form>
             </div>
         </section>
@@ -423,161 +582,162 @@
     
     <!-- 页脚 -->
     <footer>
-        <p>&copy; 2023 我的个人网站. 保留所有权利.</p>
+        <p>&copy; 2023 湮灭的个人空间. 保留所有权利.</p>
     </footer>
     
-    <!-- JavaScript代码 -->
+    <!-- JavaScript -->
     <script>
-        // 用户系统功能
-        // 用户系统功能
-let currentUser = null;
-let isGuest = false; // 添加游客状态标识
-
-// 显示登录模态框
-function showLoginModal() {
-    document.getElementById('loginModal').style.display = 'block';
-    document.getElementById('usernameInput').focus();
-}
-
-// 隐藏登录模态框
-function hideLoginModal() {
-    document.getElementById('loginModal').style.display = 'none';
-}
-
-// 退出登录功能
-function logout() {
-    currentUser = null;
-    isGuest = false;
-    localStorage.removeItem('currentUser');
-    updateLoginStatus();
-    // 显示登录模态框
-    setTimeout(() => {
-        showLoginModal();
-    }, 500);
-}
-
-// 游客浏览功能
-function guestLogin() {
-    isGuest = true;
-    hideLoginModal();
-    updateLoginStatus();
-}
-
-// 登录/注册功能
-document.getElementById('loginBtn').addEventListener('click', function() {
-    const username = document.getElementById('usernameInput').value.trim();
-    
-    if (username) {
-        currentUser = username;
-        isGuest = false;
-        localStorage.setItem('currentUser', username);
-        updateLoginStatus();
-        hideLoginModal();
-        alert(`欢迎, ${username}!`);
-    } else {
-        alert('请输入有效的用户名');
-    }
-});
-
-// 游客浏览按钮
-document.getElementById('guestBtn').addEventListener('click', guestLogin);
-
-// 更新登录状态显示
-function updateLoginStatus() {
-    const loginStatus = document.createElement('div');
-    loginStatus.className = 'login-status';
-    loginStatus.id = 'loginStatusDisplay';
-    
-    if (currentUser) {
-        loginStatus.innerHTML = `
-            当前用户: ${currentUser}
-            <button class="logout-btn" onclick="logout()">退出</button>
-        `;
-    } else if (isGuest) {
-        loginStatus.innerHTML = `
-            游客模式
-            <button class="logout-btn" onclick="logout()">登录</button>
-        `;
-    } else {
-        loginStatus.style.display = 'none';
-    }
-    
-    const existingStatus = document.getElementById('loginStatusDisplay');
-    if (existingStatus) {
-        existingStatus.replaceWith(loginStatus);
-    } else {
-        document.body.appendChild(loginStatus);
-    }
-    
-    // 控制留言板显示
-    if (currentUser) {
-        document.getElementById('loginPrompt').style.display = 'none';
-        document.getElementById('messageForm').style.display = 'block';
-    } else {
-        document.getElementById('loginPrompt').style.display = 'block';
-        document.getElementById('messageForm').style.display = 'none';
-    }
-}
-
-// 页面加载事件
-window.addEventListener('load', function() {
-    // 加载动画处理
-    setTimeout(function() {
-        document.getElementById('loader').style.opacity = '0';
-        setTimeout(function() {
-            document.getElementById('loader').style.display = 'none';
-        }, 500);
-    }, 1000);
-    
-    // 检查登录状态
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-        currentUser = savedUser;
-        updateLoginStatus();
-    } else {
-        // 如果没有登录，显示登录模态框
-        setTimeout(() => {
-            showLoginModal();
-        }, 1000);
-    }
-    
-    // 表单提交处理
-    document.querySelector('form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (!currentUser) {
-            alert('请先登录后再提交留言');
-            showLoginModal();
-            return;
-        }
-        alert(`感谢您的留言，${currentUser}！我们会尽快回复您。`);
-        this.reset();
-    });
-    
-    // 平滑滚动
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
+        // 用户系统
+        let currentUser = null;
+        let isGuest = false;
+        
+        // DOM加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 加载动画处理
+            setTimeout(function() {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('loader').style.display = 'none';
+                }, 500);
+            }, 1000);
+            
+            // 检查登录状态
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = savedUser;
+                updateLoginStatus();
+            } else {
+                // 如果没有登录，显示登录模态框
+                setTimeout(() => {
+                    showLoginModal();
+                }, 1000);
+            }
+            
+            // 登录按钮事件
+            document.getElementById('loginBtn').addEventListener('click', function() {
+                const username = document.getElementById('usernameInput').value.trim();
+                
+                if (username) {
+                    currentUser = username;
+                    isGuest = false;
+                    localStorage.setItem('currentUser', username);
+                    updateLoginStatus();
+                    hideLoginModal();
+                } else {
+                    alert('请输入有效的用户名');
+                }
+            });
+            
+            // 游客浏览按钮
+            document.getElementById('guestBtn').addEventListener('click', guestLogin);
+            
+            // 表单提交处理
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!currentUser && !isGuest) {
+                    alert('请先登录后再提交留言');
+                    showLoginModal();
+                    return;
+                }
+                
+                const name = document.getElementById('name').value;
+                const message = document.getElementById('message').value;
+                
+                alert(`${name ? name : '匿名用户'}，感谢您的留言！${currentUser ? '我会尽快回复您。' : ''}`);
+                this.reset();
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // 点击模态框外部关闭
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('loginModal');
+                if (event.target === modal) {
+                    hideLoginModal();
+                }
+            });
+            
+            // ESC键关闭模态框
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    hideLoginModal();
+                }
             });
         });
-    });
-});
-
-        // 点击模态框外部关闭模态框
-        window.addEventListener('click', function(event) {
-            const modal = document.getElementById('loginModal');
-            if (event.target === modal) {
-                hideLoginModal();
+        
+        // 显示登录模态框
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+            document.getElementById('usernameInput').focus();
+        }
+        
+        // 隐藏登录模态框
+        function hideLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+        
+        // 游客登录
+        function guestLogin() {
+            isGuest = true;
+            hideLoginModal();
+            updateLoginStatus();
+        }
+        
+        // 退出登录
+        function logout() {
+            currentUser = null;
+            isGuest = false;
+            localStorage.removeItem('currentUser');
+            updateLoginStatus();
+            setTimeout(() => {
+                showLoginModal();
+            }, 500);
+        }
+        
+        // 更新登录状态显示
+        function updateLoginStatus() {
+            const loginStatus = document.createElement('div');
+            loginStatus.className = 'login-status';
+            loginStatus.id = 'loginStatusDisplay';
+            
+            if (currentUser) {
+                loginStatus.innerHTML = `
+                    <i class="fas fa-user"></i> ${currentUser}
+                    <button class="logout-btn" onclick="logout()">退出</button>
+                `;
+            } else if (isGuest) {
+                loginStatus.innerHTML = `
+                    <i class="fas fa-user"></i> 游客模式
+                    <button class="logout-btn" onclick="logout()">登录</button>
+                `;
+            } else {
+                loginStatus.style.display = 'none';
             }
-        });
-
-        // 按ESC键关闭模态框
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                hideLoginModal();
+            
+            const existingStatus = document.getElementById('loginStatusDisplay');
+            if (existingStatus) {
+                existingStatus.replaceWith(loginStatus);
+            } else {
+                document.body.appendChild(loginStatus);
             }
-        });
+            
+            // 控制留言板显示
+            if (currentUser || isGuest) {
+                document.getElementById('loginPrompt').style.display = 'none';
+                document.getElementById('messageForm').style.display = 'block';
+            } else {
+                document.getElementById('loginPrompt').style.display = 'block';
+                document.getElementById('messageForm').style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
